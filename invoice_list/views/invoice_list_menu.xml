@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_list" model="ir.actions.report">
+            <field name="name">Invoice List</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">invoice_list.report_invoice_list</field>
+            <field name="report_file">invoice_list.report_invoice_list</field>
+            <field name="print_report_name">'InvoiceList'</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+    </data>
+</odoo>

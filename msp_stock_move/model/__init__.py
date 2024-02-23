@@ -1,0 +1,1 @@
+from . import msp_stock_move

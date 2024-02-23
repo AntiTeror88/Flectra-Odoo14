@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_delivery,access_sale_delivery,model_sale_delivery,base.group_user,1,0,0,0
+access_purchase_delivery,access_purchase_delivery,model_purchase_delivery,base.group_user,1,0,0,0

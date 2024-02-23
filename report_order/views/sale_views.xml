@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="sale_view_approval">
+        <field name="name">Sale Approval</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="created_uid"/>
+                    <field name="supervise_uid" attrs="{'invisible':[('partner_id', 'not in', [1620])]}"/>
+                    <field name="supervise_uid_2" attrs="{'invisible':[('partner_id', 'in', [1620])]}"/>
+                    <field name="approval_uid"/>
+                    <!-- <field name="akuntan_id" invisible="0" /> -->
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flectra>
+	<data noupdate="0">
+        <record id="paperformat_invoicedel" model="report.paperformat">
+            <field name="name">Invoice Del</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">80</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+		<report string="Print BPB" id="marel_report_menu_penerimaan_po" model="stock.picking" report_type="qweb-pdf" name="marel_in_stock_picking.marel_report_menu_penerimaan_po_report" file="marel_in_stock_picking.marel_report_menu_penerimaan_po_report" print_report_name="'Print Transaksi Penerimaan - %s - %s' % (object.partner_id.name or '', object.name)" />
+		
+        <report 
+        string="Print SPB" 
+        id="marel_report_menu_spb" 
+        model="stock.picking" 
+        report_type="qweb-pdf" 
+        name="marel_in_stock_picking.report_marel_report_pengantar_barang" 
+        file="marel_in_stock_picking.report_marel_report_pengantar_barang" 
+        print_report_name="'Print SPB - %s - %s' % (object.partner_id.name or '', object.name)" />
+
+        <report 
+        string="Picking Barcode" 
+        id="marel_report_picking_barcode" 
+        model="stock.picking" 
+        report_type="qweb-pdf" 
+        name="marel_in_stock_picking.report_picking_barcode" 
+        file="marel_in_stock_picking.rreport_picking_barcode" 
+        print_report_name="'Picking Barcode - %s - %s' % (object.partner_id.name or '', object.name)"
+        paperformat="paperformat_invoicedel"/>
+	</data>
+</flectra>

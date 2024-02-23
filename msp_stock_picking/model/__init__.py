@@ -1,0 +1,1 @@
+from . import marel_in_stock_picking

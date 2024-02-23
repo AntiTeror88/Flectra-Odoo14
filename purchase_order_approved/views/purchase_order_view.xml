@@ -1,0 +1,51 @@
+<!-- Copyright 2017 ForgeFlow S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.form - purchase_order_approved</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <button name="button_draft" position="attributes">
+                <attribute name="states">cancel,to approve,approved</attribute>
+            </button>
+            <button name="button_approve" position="after">
+                <button
+                    name="button_release"
+                    type="object"
+                    states="approved"
+                    string="Convert to Purchase Order"
+                    class="oe_highlight"
+                />
+            </button>
+        </field>
+    </record>
+
+    <record id="action_purchase_approval" model="ir.actions.act_window">
+        <field name="name">Purchase Approval</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+        <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="context">{'search_default_todo':1, 'show_purchase': True}</field>
+        <field name="domain">[('state', 'not in', ('draft', 'sent', 'confirmed', 'purchase','cancel','done'))]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a Quotation, the first step of a new purchase.
+            </p><p>
+                Once the quotation is confirmed, it becomes a purchase order.
+                You'll be able to bill it and do payments.
+                From the <i>Purchase Orders</i> menu, you can track delivery
+                orders or services.
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="action_purchase_approval"
+            id="menu_purchase_approval" parent="purchase.menu_purchase_root"
+            sequence="1" />
+    
+    <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+        <field name="domain">[('state','in',('approved', 'purchase', 'done'))]</field>
+    </record>
+</odoo>

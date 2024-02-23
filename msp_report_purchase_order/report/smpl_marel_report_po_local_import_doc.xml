@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="marel_report_po_local_import_doc">
+        <t t-call="web.external_layout" t-if="o.po_import">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+            <table class="table table-sm o_main_table">
+                <tr style="height:20px">
+                    <td>Document Code</td>
+                    <td class="text-right">Page</td>
+                    <td class="text-right">Revision Number</td>
+                    <td class="text-right">Revision Date</td>
+                    <td class="text-right">Effective Date </td>
+                </tr>
+                <tr style="height:20px">
+                    <td>MSP/F/P/PCH/02.01</td>
+                    <td class="text-right">Page 1 From 1</td>
+                    <td class="text-right">-</td>
+                    <td class="text-right">-</td>
+                    <td class="text-right">02 JANUARY 2019</td>
+                </tr>
+            </table>
+            <div class="row">
+                <div class="col-6" name="company_address">
+                    <t t-if="not o.dest_address_id and o.picking_type_id.warehouse_id">
+                        <t>
+                            <!--<t t-set="information_block">-->
+                            <strong>Shipping address:</strong>
+                            <div t-field="o.picking_type_id.warehouse_id.partner_id" t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'/>
+                        </t>
+                    </t>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                    <t>
+                        <!--<t t-set="address">-->
+                        <div t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                        <p t-if="o.partner_id.vat">
+                            <t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:<span t-field="o.partner_id.vat"/>
+                        </p>
+                    </t>
+                </div>
+            </div>
+            <div class="page">
+                <div class="oe_structure"/>
+                <h2 t-if="o.state == 'draft'">Request for Quotation #<span t-field="o.name"/>
+                </h2>
+                <h2 t-if="o.state in ['sent', 'to approve']">Purchase Order #<span t-field="o.name"/>
+                </h2>
+                <h2 t-if="o.state in ['purchase', 'done']">Purchase Order #<span t-field="o.name"/>
+                </h2>
+                <h2 t-if="o.state == 'cancel'">Cancelled Purchase Order #<span t-field="o.name"/>
+                </h2>
+                <div class="row mt32 mb32">
+                    <div t-if="o.name" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Our Order Reference:</strong>
+                        <p t-field="o.name" style="font-size:22px;"/>
+                    </div>
+                    <div t-if="o.partner_ref" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Your Order Reference:</strong>
+                        <p t-field="o.partner_ref"/>
+                    </div>
+                    <div t-if="o.date_order" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Order Date:</strong>
+                        <p t-field="o.date_order"/>
+                    </div>
+                    <div t-if="o.scheduled_date" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Scheduled Date:</strong>
+                        <p t-field="o.scheduled_date"/>
+                    </div>
+                    <div name="branch" t-if="o.branch_id" class="col-auto col-3 mw-100 mb-2" groups="base_branch_company.group_multi_branch">
+                        <strong>Branch:</strong>
+                        <p t-field="o.branch_id"/>
+                    </div>
+                    <div t-if="o.kurs" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Course:</strong>
+                        <p t-field="o.kurs"/>
+                    </div>
+                    <div t-if="o.jenis_kurs" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Course Type:</strong>
+                        <p t-field="o.jenis_kurs"/>
+                    </div>
+                    <div t-if="o.taxes_id" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Taxes:</strong>
+                        <p t-field="o.taxes_id"/>
+                    </div>
+                </div>
+
+                <table class="table table-sm">
+                    <!--<table class="table table-sm o_main_table">-->
+                    <thead>
+                        <tr>
+                            <th>
+                                <strong>No</strong>
+                            </th>
+                            <th>
+                                <strong>Product</strong>
+                            </th>
+                            <td class="text-right">
+                                <strong>Status</strong>
+                            </td>
+                            <th class="text-right">
+                                <strong>Qty</strong>
+                            </th>
+                            <th class="text-right">
+                                <strong>Unit Price</strong>
+                            </th>
+                            <th class="text-right">
+                                <strong>Amount</strong>
+                            </th>
+                            <th class="text-right">
+                                <strong>Description</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.order_line" t-as="line">
+                            <td>
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td>
+                                <span t-field="line.product_id"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.status"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="'{0:.2f}'.format(line.product_qty)"/>
+                                <span t-field="line.product_uom.name" groups="product.group_uom"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.price_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.keterangan"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="total" class="row justify-content-end">
+                  <div class="col-8">
+                        <div>
+                            <p t-field="o.note_import"/>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <table class="table table-sm">
+                            <tr class="border-black">
+                                <td name="td_subtotal_label">
+                                    <strong>Subtotal</strong>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td name="td_taxes_label">Taxes</td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                            <tr class="border-black o_total">
+                                <td name="td_amount_total_label">
+                                    <strong>Total</strong>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <table>
+                    <tr>
+                        <td width="40%">Sincerely,</td>
+                        <td width="30%"></td>
+                        <td width="40%">Approved,</td>
+                    </tr>
+                    <tr>
+                        <td width="40%">PT. Marel Sukses Pratama</td>
+                        <td width="30%"></td>
+                        <td width="40%"></td>
+                    </tr>
+                    <tr>
+                        <td width="40%" class="text-center">
+                            <img t-attf-src="data:image/png;base64,{{ o.supervise_uid.digital_signature }}" style="width:200px; height:100px;"/>
+                        </td>
+                        <td width="30%">
+                        </td>
+                        <td t-if="o.state not in ['purchase']" width="40%">
+                            <img t-attf-src="data:image/png;base64,{{ o.approval_uid.digital_signature }}" style="position:absolute; width:200px; height:100px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="40%" class="text-center">
+                            <span>Wati/Budi</span>
+                        </td>
+                        <td width="30%"></td>
+                        <td width="40%">Martin Lukas / Erli Faniwati</td>
+                    </tr>
+                    <tr>
+                        <td width="40%">Please signed after P.O. accepted email back to PT. </td>
+                        <td width="30%">Marel S.P</td>
+                        <td width="40%">
+                        </td>
+                    </tr>
+                </table>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+        <t t-call="web.external_layout" t-if="o.po_local">
+            <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+            <table class="table table-sm o_main_table">
+                <tr style="height:20px">
+                    <td>Kode Dokumen</td>
+                    <td class="text-right">Halaman</td>
+                    <td class="text-right">No Revisi</td>
+                    <td class="text-right">Tgl Revisi </td>
+                    <td class="text-right">Tgl Efektif </td>
+                </tr>
+                <tr style="height:20px">
+                    <td>MSP/F/P/PCH/02.01</td>
+                    <td class="text-right">HAL 1 dari 1</td>
+                    <td class="text-right">-</td>
+                    <td class="text-right">-</td>
+                    <td class="text-right">02 JANUARI 2019</td>
+                </tr>
+            </table>
+            <div class="row">
+                <div class="col-6" name="company_address">
+                    <t t-if="not o.dest_address_id and o.picking_type_id.warehouse_id">
+                        <t>
+                            <!--<t t-set="information_block">-->
+                            <strong>Alamat Pengiriman:</strong>
+                            <div t-field="o.picking_type_id.warehouse_id.partner_id" t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'/>
+                        </t>
+                    </t>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                    <t>
+                        <!--<t t-set="address">-->
+                        <div t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                        <p t-if="o.partner_id.vat">
+                            <t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:<span t-field="o.partner_id.vat"/>
+                        </p>
+                    </t>
+                </div>
+            </div>
+            <div class="page">
+                <div class="oe_structure"/>
+                <h2 t-if="o.state == 'draft'">Request for Quotation #<span t-field="o.name"/>
+                </h2>
+                <h2 t-if="o.state in ['sent', 'to approve']">Purchase Order #<span t-field="o.name"/>
+                </h2>
+                <h2 t-if="o.state in ['purchase', 'done']">Purchase Order #<span t-field="o.name"/>
+                </h2>
+                <h2 t-if="o.state == 'cancel'">Cancelled Purchase Order #<span t-field="o.name"/>
+                </h2>
+                <div class="row mt32 mb32">
+                    <div t-if="o.name" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Referensi Pesanan Kami:</strong>
+                        <p t-field="o.name" style="font-size:22px;"/>
+                    </div>
+                    <div t-if="o.partner_ref" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Referensi Pesanan Anda:</strong>
+                        <p t-field="o.partner_ref"/>
+                    </div>
+                    <div t-if="o.date_order" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Tanggal pemesanan:</strong>
+                        <p t-field="o.date_order"/>
+                    </div>
+                    <div t-if="o.scheduled_date" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Tanggal yang Dijadwalkan:</strong>
+                        <p t-field="o.scheduled_date"/>
+                    </div>
+                    <div name="branch" t-if="o.branch_id" class="col-auto col-3 mw-100 mb-2" groups="base_branch_company.group_multi_branch">
+                        <strong>Cabang:</strong>
+                        <p t-field="o.branch_id"/>
+                    </div>
+                    <div t-if="o.kurs" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Kurs:</strong>
+                        <p t-field="o.kurs"/>
+                    </div>
+                    <div t-if="o.jenis_kurs" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Jenis Kurs:</strong>
+                        <p t-field="o.jenis_kurs"/>
+                    </div>
+                    <div t-if="o.taxes_id" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Ppn:</strong>
+                        <p t-field="o.taxes_id"/>
+                    </div>
+                </div>
+
+                <table class="table table-sm">
+                    <!--<table class="table table-sm o_main_table">-->
+                    <thead>
+                        <tr>
+                            <th>
+                                <strong>No</strong>
+                            </th>
+                            <th>
+                                <strong>Prodak</strong>
+                            </th>
+                            <td class="text-right">
+                                <strong>Status</strong>
+                            </td>
+                            <th class="text-right">
+                                <strong>Qty</strong>
+                            </th>
+                            <th class="text-right">
+                                <strong>Harga Satuan</strong>
+                            </th>
+                            <th class="text-right">
+                                <strong>Total</strong>
+                            </th>
+                            <th class="text-right">
+                                <strong>Keterangan</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.order_line" t-as="line">
+                            <td>
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td>
+                                <span t-field="line.product_id"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.status"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="'{0:.2f}'.format(line.product_qty)"/>
+                                <span t-field="line.product_uom.name" groups="product.group_uom"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.price_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.keterangan"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="total" class="row justify-content-end">
+                  <div class="col-8">
+                        <div>
+                            <p t-field="o.note_lokal"/>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <table class="table table-sm">
+                            <tr class="border-black">
+                                <td name="td_subtotal_label">
+                                    <strong>Subtotal</strong>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td name="td_taxes_label">Ppn</td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                            <tr class="border-black o_total">
+                                <td name="td_amount_total_label">
+                                    <strong>Total</strong>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <table>
+                    <tr>
+                        <td width="40%">Hormat Kami,</td>
+                        <td width="30%"></td>
+                        <td width="40%">Disetujui,</td>
+                    </tr>
+                    <tr>
+                        <td width="40%">PT. Marel Sukses Pratama</td>
+                        <td width="30%"></td>
+                        <td width="40%"></td>
+                    </tr>
+                    <tr>
+                        <td width="40%" class="text-center">
+                            <img t-attf-src="data:image/png;base64,{{ o.supervise_uid.digital_signature }}" style="width:200px; height:100px;"/>
+                        </td>
+                        <td width="30%">
+                        </td>
+                        <td t-if="o.state not in ['purchase']" width="40%">
+                            <img t-attf-src="data:image/png;base64,{{ o.approval_uid.digital_signature }}" style="position:absolute; width:200px; height:100px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="40%" class="text-center">
+                            <span>Wati/Budi</span>
+                        </td>
+                        <td width="30%"></td>
+                        <td width="40%">Martin Lukas / Erli Faniwati</td>
+                    </tr>
+                    <tr>
+                        <td width="40%">Harap ditandatangani setelah P.O. diterima dan fax </td>
+                        <td width="30%">kembali ke PT. Marel S.P</td>
+                        <td width="40%">
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+</odoo>

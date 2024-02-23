@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="view_msp_bom" model="ir.ui.view">
+            <field name="name">Msp Bom</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="janis_kk_id" options="{'no_create': True}"/>
+                    <field name="toleransi_antislip" options="{'no_create': True}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_msp_bom_line" model="ir.ui.view">
+            <field name="name">mrp.bom.form2</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='operation_id']" position="after">
+                    <field name="qty_bom_reguler" readonly="1"/>
+                    <field name="qty_bom_soccer" readonly="1"/>
+                    <field name="qty_benang_kg" readonly="1"/>
+                    <field name="qty_benang_gr"/>
+                    <button name="get_hitung_qty_mrp_bom_line" type="object" string="Gramasi"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

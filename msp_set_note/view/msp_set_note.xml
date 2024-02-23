@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- data sample gramasi -->
+        <record id="view_msp_set_note_tree" model="ir.ui.view">
+            <field name="name">msp.set.note.tree</field>
+            <field name="model">msp.set.note</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Set note">
+                    <field name="name"/>
+                    <field name="note_lokal"/>
+                    <field name="note_import"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_msp_set_note_form" model="ir.ui.view">
+            <field name="name">msp.set.note.form</field>
+            <field name="model">msp.set.note</field>
+            <field name="arch" type="xml">
+                <form string="Set note">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="note_lokal"/>
+                            <field name="note_import"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_msp_set_note" model="ir.actions.act_window">
+            <field name="name">Data Sample</field>
+            <field name="res_model">msp.set.note</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to define a new Sample.
+                </p>
+            </field>
+        </record>
+
+        <menuitem 
+            id="menu_msp_sample_dev2" 
+            name="Set Note" 
+            parent="purchase.menu_purchase_root" 
+            action="action_msp_set_note" 
+            sequence="35"/>
+
+        <record id="purchase_order_set_note_view_form" model="ir.ui.view">
+            <field name="name">purchase.order.view.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+                <field name="arch" type="xml">
+                    <field name="notes" position="before">
+                        <field name="note_lokal" readonly="0" attrs="{'invisible': [('po_local', '=', False)]}"/>
+                        <field name="note_import" readonly="0" attrs="{'invisible': [('po_import', '=', False)]}"/>
+                    </field>
+                    <field name="partner_id" position="before">
+                        <field name="msp_set_note_id" />
+                    </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

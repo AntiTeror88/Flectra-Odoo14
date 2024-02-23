@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Carlos Dauden - Tecnativa <carlos.dauden@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="view_invoice_line_tree_info" model="ir.ui.view">
+        <field name="name">account.invoice.line.tree.info</field>
+        <field name="model">account.invoice.line</field>
+        <field name="arch" type="xml">
+            <tree string="Invoice Line">
+                <field name="invoice_user_id"/>
+                <field name="product_categ_id"/>
+                <field name="name"/>
+                <field name="invoice_date"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="label"/>
+                <field name="quantity"/>
+                <field name="price_unit"/>
+                <field name="discount"/>
+                <field name="price_subtotal" sum="subtotal"/>
+                <field name="tax_base_amount" sum="taxtotal"/>
+                <field name="amount_total" sum="total"/>
+                <field name="invoice_date_due"/>
+                <field name="payment_state"/>
+                <field name="company_currency_id" invisible="1"/>
+                <field name="origin"/>
+                <field name="cost"/>
+                <field name="so_price"/>
+                <field name="narration"/>
+                <field name="do"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_invoice_line_search" model="ir.ui.view">
+        <field name="name">account.invoice.line.search</field>
+        <field name="model">account.invoice.line</field>
+        <field name="arch" type="xml">
+            <search string="Invoices Line">
+                <filter string="My Invoices" name="my_invoice" domain="[('invoice_user_id', '=', uid)]"/>
+                <separator/>
+                <field name="invoice_date"/>
+                <field name="analytic_account_id"/>
+                <separator/>
+                <filter string="To Invoice" name="toinvoice" domain="[('state','=','draft')]" help = "Draft Invoices"/>
+                <filter string="Invoiced" name="current" domain="[('state','not in', ('draft','cancel'))]"/>
+                <separator/>
+                <filter string="Customers" name="customer" domain="['|', ('move_type','=','out_invoice'),('move_type','=','out_refund')]"/>
+                <filter string="Vendors" name="supplier" domain="['|', ('move_type','=','in_invoice'),('move_type','=','in_refund')]"/>
+                <separator/>
+                <filter string="Invoices" name="invoice" domain="['|', ('move_type','=','out_invoice'),('move_type','=','in_invoice')]"/>
+                <filter string="Credit Notes" name="creditnote" domain="['|', ('move_type','=','out_refund'),('move_type','=','in_refund')]"/>
+                <field name="partner_id" operator="child_of"/>
+                <field name="invoice_user_id"/>
+                <field name="product_id"/>
+                <field name="product_categ_id" filter_domain="[('product_categ_id', 'child_of', self)]"/>
+                <separator/>
+                <filter string="Invoice Date" name="filter_invoice_date" date="invoice_date"/>
+                <group expand="1" string="Group By">
+                    <filter string="Salesperson" name='user' context="{'group_by':'invoice_user_id'}"/>
+                    <filter string="Partner" name="partner_id" context="{'group_by':'partner_id','residual_visible':True}"/>
+                    <filter string="Product Category" name="category_product" context="{'group_by':'product_categ_id','residual_invisible':True}"/>
+                    <filter string="Analytic" name="analytic_account" context="{'group_by':'analytic_account_id'}"/>
+                    <filter string="Status" name="status" context="{'group_by':'state'}"/>
+                    <filter string="Company" name="company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    <separator orientation="vertical" />
+                    <filter string="Date" name="invoice_date" context="{'group_by':'invoice_date'}"/>
+                    <filter string="Due Date" name="duemonth" context="{'group_by':'invoice_date_due:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_invoice_line_report" model="ir.actions.act_window">
+        <field name="name">Invoice Lines</field>
+        <field name="res_model">account.invoice.line</field>
+        <field name="view_mode">tree,pivot,graph</field>
+        <field name="context">{'search_default_current':1, 'search_default_customer': 1}</field>
+        <field name="search_view_id" ref="view_account_invoice_line_search"/>
+        <field name="help">From this report, you can have an overview of the amount invoiced to your customers. The search tool can also be used to personalise your Invoices reports and so, match this analysis to your needs.</field>
+    </record>
+
+    <menuitem action="action_account_invoice_line_report" id="menu_action_account_invoice_line_report" parent="account.menu_finance_entries_accounting_journals" groups="account.group_account_user" sequence="99"/>
+
+</odoo>

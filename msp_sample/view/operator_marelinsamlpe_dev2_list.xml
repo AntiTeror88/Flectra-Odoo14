@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- data sample Operator -->
+        <record id="view_operator_mspsample_dev_line_tree" model="ir.ui.view">
+            <field name="name">operator.mspsample.dev.line.tree</field>
+            <field name="model">operator.mspsample.dev.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Data Operator Sample">
+                    <field name="tgl_buat"/>
+                    <field name="nama_desain"/>
+                    <field name="berat"/>
+                    <field name="waktu_produksi"/>
+                    <field name="nama_operator_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_operator_mspsample_dev_line_form" model="ir.ui.view">
+            <field name="name">operator.mspsample.dev.line.form</field>
+            <field name="model">operator.mspsample.dev.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Data Operator">
+                    <!-- <header>
+                        <button name="action_close" type="object" string="Run" states="draft" class="btn‐primary"/>
+                        <button name="action_set_draft" type="object" string="Set To Draft" class="btn-info" attrs="{'invisible': [('state', 'not in', ['done'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,done"/>
+                    </header> -->
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="tgl_buat"/>
+                                <field name="tgl_buat_operator"/>
+                                <field name="user_id"/>
+                                <field name="nama_desain"/>
+                                <field name="berat"/>
+                                <field name="waktu_produksi"/>
+                                <field name="nama_operator_id"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="welt_inside_crc"/>
+                                    <field name="welt_inside_s"/>
+                                    <field name="welt_inside_e"/>
+                                </group>
+                                <group>
+                                    <field name="welt_outside_crc"/>
+                                    <field name="welt_outside_s"/>
+                                    <field name="welt_outside_e"/>
+                                </group>
+                                <group>
+                                    <field name="transfer_crc"/>
+                                    <field name="transfer_s"/>
+                                    <field name="transfer_e"/>
+                                </group>
+                                <group>
+                                    <field name="leg_gum_crc"/>
+                                    <field name="leg_gum_s"/>
+                                    <field name="leg_gum_e"/>
+                                </group>
+                                <group>
+                                    <field name="leg_crc"/>
+                                    <field name="leg_s"/>
+                                    <field name="leg_e"/>
+                                </group>
+                                <group>
+                                    <field name="leg_band_elast_crc"/>
+                                    <field name="leg_band_elast_s"/>
+                                    <field name="leg_band_elast_e"/>
+                                </group>
+                                <group>
+                                    <field name="ankle_crc"/>
+                                    <field name="ankle_s"/>
+                                    <field name="ankle_e"/>
+                                </group>
+                                <group>
+                                    <field name="heel_crc"/>
+                                    <field name="heel_s"/>
+                                    <field name="heel_e"/>
+                                </group>
+                                <group>
+                                    <field name="foot_gum_crc"/>
+                                    <field name="foot_gum_s"/>
+                                    <field name="foot_gum_e"/>
+                                </group>
+                                <group>
+                                    <field name="foot_crc"/>
+                                    <field name="foot_s"/>
+                                    <field name="foot_e"/>
+                                </group>
+                                <group>
+                                    <field name="begin_toe_crc"/>
+                                    <field name="begin_toe_s"/>
+                                    <field name="begin_toe_e"/>
+                                </group>
+                                <group>
+                                    <field name="toe_crc"/>
+                                    <field name="toe_s"/>
+                                    <field name="toe_e"/>
+                                </group>
+                                <group>
+                                    <field name="rosso_crc"/>
+                                    <field name="rosso_s"/>
+                                    <field name="rosso_e"/>
+                                </group>
+                                <group>
+                                    <field name="lose_crc"/>
+                                    <field name="lose_s"/>
+                                    <field name="lose_e"/>
+                                </group>
+                                <group>
+                                    <field name="lingking_crc"/>
+                                    <field name="lingking_s"/>
+                                    <field name="lingking_e"/>
+                                </group>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <group>
+                                    <field name="feed_1"/>
+                                    <field name="feed_2"/>
+                                    <field name="feed_3_a"/>
+                                    <field name="feed_3_b"/>
+                                    <field name="feed_4_a"/>
+                                    <field name="feed_4_b"/>
+                                    <field name="feed_5"/>
+                                    <field name="feed_6"/>
+                                    <field name="feed_7"/>
+                                    <field name="feed_8"/>
+                                    <field name="feed_1a"/>
+                                    <field name="feed_1b"/>
+                                </group>
+                                <group>
+                                    <field name="feed_1c"/>
+                                    <field name="feed_2a"/>
+                                    <field name="feed_2b"/>
+                                    <field name="feed_2c"/>
+                                    <field name="feed_3a"/>
+                                    <field name="feed_3b"/>
+                                    <field name="feed_3c"/>
+                                    <field name="feed_4a"/>
+                                    <field name="feed_4b"/>
+                                    <field name="feed_4c"/>
+                                    <field name="feed_5a"/>
+                                    <field name="feed_5b"/>
+                                    <field name="feed_5c"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group name="main_grp_1" colspan="2">
+                                    <group name="main_grp_col_1">
+                                        <field name="gum_stretch_x"/>
+                                        <field name="gum_stretch_y"/>
+                                    </group>
+                                    <group name="main_grp_col1">
+                                        <field name="leg_gum_stretch_x"/>
+                                        <field name="leg_gum_stretch_y"/>
+                                    </group>
+                                </group>
+                                <group name="main_grp_2" colspan="2">
+                                    <group name="main_grp_col_2">
+                                        <field name="leg_stretch_x"/>
+                                        <field name="leg_stretch_y"/>
+                                    </group>
+                                    <group name="main_grp_col2">
+                                        <field name="foot_stretch_x"/>
+                                        <field name="foot_stretch_y"/>
+                                    </group>
+                                </group>
+                                <group name="main_grp_3" colspan="2">
+                                    <group name="main_grp_col_3">
+                                        <field name="foot_gum_stretch_x"/>
+                                        <field name="foot_gum_stretch_y"/>
+                                    </group>
+                                    <group name="main_grp_col3">
+                                        <field name="hell_stretch_x"/>
+                                        <field name="hell_stretch_y"/>
+                                    </group>
+                                </group>
+                                <group name="main_grp_4" colspan="2">
+                                    <group name="main_grp_col_3">
+                                        <field name="leg_gum_atas_stretch_x"/>
+                                        <field name="leg_gum_atas_stretch_y"/>
+                                    </group>
+                                    <group name="main_grp_col3">
+                                        <field name="leg_gum_bawah_stretch_x"/>
+                                        <field name="leg_gum_bawah_stretch_y"/>
+                                    </group>
+                                </group>
+                                <group name="main_grp_5" colspan="2">
+                                    <group name="main_grp_col_3">
+                                        <field name="gum_atas_stretch_x"/>
+                                        <field name="gum_atas_stretch_y"/>
+                                    </group>
+                                    <group name="main_grp_col3">
+                                        <field name="gum_bawah_stretch_x"/>
+                                        <field name="gum_bawah_stretch_y"/>
+                                    </group>
+                                    <group name="main_grp_col1">
+                                    </group>
+                                </group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

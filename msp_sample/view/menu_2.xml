@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="action_msp_sample_dev2" model="ir.actions.act_window">
+            <field name="name">Data Sample</field>
+            <field name="res_model">msp.sample.dev</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to define a new Sample.
+                </p>
+            </field>
+        </record>
+        <!-- operator mengisi sample -->
+        <record id="action_operator_marelinsamlpe_dev2_list" model="ir.actions.act_window">
+            <field name="name">Operator Sample</field>
+            <field name="res_model">operator.mspsample.dev.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to define a new Sample Line.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_marel_in_bom_list" model="ir.actions.act_window">
+            <field name="name">Jenis Kk Bom</field>
+            <field name="res_model">marel.sample.jenis.kk</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to define a new Jenis Kk.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_marelin_permintaan_develop_list" model="ir.actions.act_window">
+            <field name="name">Permintaan Benang Develop</field>
+            <field name="res_model">marelin.permintaan.develop</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to define a new Permintaan Benang Develop.
+                </p>
+            </field>
+        </record>
+
+        <!-- web_icon="msp_sample_dev,static/description/sample.png" -->
+        <menuitem 
+        id="msp_sample_dev_02" 
+        name="Sample Dev" 
+        web_icon="msp_sample,static/description/sample.png"
+        sequence="100"/>
+        <!-- sample -->
+        <menuitem 
+        id="msp_sample_dev_12" 
+        name="Sample" 
+        parent="msp_sample_dev_02" 
+        sequence="30"/>
+        
+        <menuitem 
+        id="menu_msp_sample_dev2" 
+        name="Sample Dev" 
+        parent="msp_sample_dev_12" 
+        action="action_msp_sample_dev2" 
+        sequence="35"/>
+
+        <menuitem 
+        id="menu_marelin_permintaan_develop" 
+        name="Permintaan Benang" 
+        parent="msp_sample_dev_12" 
+        action="action_marelin_permintaan_develop_list" 
+        sequence="35"/>
+        <!-- sample -->
+        <menuitem 
+        id="msp_sample_dev_13" 
+        name="Operator Sample" 
+        parent="msp_sample_dev_02" 
+        sequence="30"/>
+
+        <menuitem 
+        id="menu_operator_marelinsamlpe_dev2_list" 
+        name="Operator Spl Dev" 
+        parent="msp_sample_dev_13" 
+        action="action_operator_marelinsamlpe_dev2_list" 
+        sequence="35"/>
+        <!-- Bom -->
+        <menuitem 
+        id="msp_sample_dev_14" 
+        name="Jenis Kk" 
+        parent="msp_sample_dev_02" 
+        sequence="30"/>
+
+        <menuitem 
+        id="menu_marel_in_bom_line" 
+        name="Jenis Nama Kk" 
+        parent="msp_sample_dev_14" 
+        action="action_marel_in_bom_list" 
+        sequence="35"/>
+    </data>
+</odoo>

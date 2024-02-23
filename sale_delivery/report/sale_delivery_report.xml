@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_delivery_tree" model="ir.ui.view">
+        <field name="name">sale.delivery.tree</field>
+        <field name="model">sale.delivery</field>
+        <field name="arch" type="xml">
+            <tree string="Delivery">
+                <field name="date"/>
+                <field name="partner_id" widget="many2onebutton"/>
+                <field name="name" widget="many2onebutton"/>
+                <field name="product_id"/>
+                <!-- <field name="wh" widget="many2onebutton"/> -->
+                <field name="product_uom_qty" sum="Order"/>
+                <field name="qty_delivered" sum="Delivered"/>
+                <field name="qty_to_deliver" sum="Left"/>
+                <field name="confirmation_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_sale_delivery_pivot" model="ir.ui.view">
+        <field name="name">sale.delivery.pivot</field>
+        <field name="model">sale.delivery</field>
+        <field name="arch" type="xml">
+            <pivot string="Delivery" disable_linking="True">
+                <field name="partner_id" type="row"/>
+                <field name="name" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="product_uom_qty" type="measure"/>
+                <field name="qty_delivered" type="measure"/>
+                <field name="qty_to_deliver" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_sale_delivery_graph" model="ir.ui.view">
+        <field name="name">sale.delivery.graph</field>
+        <field name="model">sale.delivery</field>
+        <field name="arch" type="xml">
+            <graph string="Delivery" type="line">
+                <field name="confirmation_date" type="row" interval="day"/>
+                <field name="qty_to_deliver" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_sale_delivery_filter" model="ir.ui.view">
+        <field name="name">sale.delivery.filter</field>
+        <field name="model">sale.delivery</field>
+        <field name="arch" type="xml">
+            <search string="Delivery Filter">
+                <field name="date"/>
+                <field name="product_id"/>
+                <field name="categ_id"/>
+                <field name="partner_id"/>
+                <filter name="quotations" string="Quotations" domain="[('state','=', 'draft')]"/>
+                <filter name="outstanding" string="Outstanding"
+                            domain="[('qty_to_deliver','&gt;=', 5),('state','=', 'sale')]"
+                            help="Outstanding"/>
+                <separator/>
+                <filter string="Current Month" name="month" domain="[('date','&lt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d')),('date','&gt;=',(datetime.date.today()-relativedelta(day=1)).strftime('%Y-%m-%d'))]" help="Current Month"/>
+                
+                <filter string="Prev Month" name="prev_month" domain="[('date','&gt;=',(context_today()-relativedelta(months=1)).strftime('%Y-%m-01')),('date','&lt;',time.strftime('%Y-%m-01'))]"/>
+                <filter string="This Year" name="year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Customer" name="Customer" context="{'group_by':'partner_id'}"/>
+                    <filter string="Product" name="Product" context="{'group_by':'product_id'}"/>
+                    <filter string="Product Category" name="Category" context="{'group_by':'categ_id'}"/>
+                    <separator/>
+                    <filter string="Order Date" name="date" context="{'group_by':'date'}"/>
+                    <filter string="Confirmation Date" name="confirm_month" context="{'group_by':'confirmation_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sale_delivery" model="ir.actions.act_window">
+        <field name="name">Delivery</field>
+        <field name="res_model">sale.delivery</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,pivot,graph</field>
+        <field name="context">{'group_by':['partner_id', 'name', 'product_id'],'search_default_outstanding':1, }</field>
+        <field name="search_view_id" ref="view_sale_delivery_filter"/>
+        <field name="help">This report performs analysis on your quotations and sales orders. Analysis check your sales revenues and sort it by different group criteria (salesman, partner, product, etc.) Use this report to perform analysis on sales not having invoiced yet. If you want to analyse your turnover, you should use the Invoice Analysis report in the Accounting application.</field>
+    </record>
+
+    <menuitem id="menu_sale_delivery"
+            name="Outstanding Sale"
+            action="action_sale_delivery"
+            parent="sale.menu_sale_report"
+            sequence="2"/>
+
+</odoo>

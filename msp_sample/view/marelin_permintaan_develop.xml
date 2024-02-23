@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_marelin_permintaan_develop_tree" model="ir.ui.view">
+            <field name="name">marelin.permintaan.develop.tree</field>
+            <field name="model">marelin.permintaan.develop</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Permintaan Benang Develop">
+                    <field name="name"/>
+                    <field name="tgl"/>
+                    <field name="needle"/>
+                    <field name="nama_desain_develop"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- <record id="view_marelin_permintaan_develop_form" model="ir.ui.view">
+            <field name="name">marelin.permintaan.develop.form</field>
+            <field name="model">marelin.permintaan.develop</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Permintaan Benang Develop">
+                    <sheet>
+                        <group>
+                            <label form="name" class="oe_edit_only" string="No Id"/>
+                            <group>
+                                <field name="tgl"/>
+                                <field name="needle"/>
+                                <field name="nama_desain_develop"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Benang Develop">
+                                <field name="marelin_permintaan_benang_developline_ids">
+                                    <tree string="Components" editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="jmlh_ambil_kg"/>
+                                        <field name="jmlh_ambil_connes" />
+                                        <field name="jmlh_sisa_kg" />
+                                        <field name="jmlh_sisa_connes" />
+                                        <field name="keterangan" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record> -->
+    </data>
+</odoo>

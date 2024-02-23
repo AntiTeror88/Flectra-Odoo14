@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="report_move_delivery_pivot" model="ir.ui.view">
+            <field name="name">report.move.delivery.pivot</field>
+            <field name="model">report.move.delivery</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="datedelivered"/>
+                    <field name="sku"/>
+                    <field name="qty_del"/>
+                </pivot>
+            </field>
+        </record>
+        <!-- Tree view for the menuitem -->
+        <record id="report_move_delivery_tree" model="ir.ui.view">
+            <field name="name">report.move.delivery.tree</field>
+            <field name="model">report.move.delivery</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="datedelivered"/>
+                    <field name="sku"/>
+                    <field name="description"/>
+                    <field name="qty_del"/>
+                    <!-- <field name="sj_no"/>
+                    <field name="carrier"/>
+                    <field name="so_no"/> -->
+                </tree>
+            </field>
+        </record>
+
+        <record id="report_move_delivery_search" model="ir.ui.view">
+            <field name="name">report.move.delivery.search</field>
+            <field name="model">report.move.delivery</field>
+            <field name="arch" type="xml">
+                <search string="Stock Moves">
+                    <!-- <field name="sj_no" string="Transfer"/> -->
+                    <field name="sku" string="Reference"/>
+                    <!-- <field name="carrier"/>
+                    <separator/>
+                    <filter string="To Do" name="todo" domain="[('state', 'not in', ['done', 'draft'])]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <separator/>
+                    <filter string="Incoming" name="incoming" domain="[('code', '=', 'incoming')]"/>
+                    <filter string="Outgoing" name="outgoing" domain="[('code', '=', 'outgoing')]"/>
+                    <filter string="Internal" name="internal" domain="[('code', '=', 'internal')]"/>
+                    <filter string="Manufacturing" name="manufacturing" domain="[('code', '=', 'mrp_operation')]"/> -->
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('datedelivered','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59))), ('datedelivered','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]" help="Today or scheduled for today"/>
+                    <filter string="Date" name="filter_date" date="datedelivered"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Product" name="groupby_product_id" domain="[]" context="{'group_by': 'sku'}"/>
+                        <filter string="Status" name="by_state" domain="[]"  context="{'group_by': 'state'}"/>
+                        <filter string="Date" name="by_date" domain="[]" context="{'group_by': 'datedelivered'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record  id="report_move_delivery_action" model="ir.actions.act_window">
+            <field name="name">Move Resume</field>
+            <field name="res_model">report.move.delivery</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="context">{'search_default_today':1}</field>
+            <field name="search_view_id" ref="report_move_delivery_search"/>
+        </record>
+
+    
+        <menuitem id="sub_move_report_menu" parent="stock.menu_warehouse_report" sequence="155" name="Report Resume" action="report_move_delivery_action" />
+        
+        
+        
+        
+    </data>
+</odoo>

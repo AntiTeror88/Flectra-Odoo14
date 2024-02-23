@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="ir.sequence" id="seq_marel_sj_no">
+            <field name="name">Nomenclature No SJ</field>
+            <field name="code">marel.sj.no</field>
+            <field name="prefix">SJ</field>
+            <!-- <field name="suffix">/MAREL/%(year)s</field> -->
+            <field name="padding">6</field>
+        </record>
+
+        <record model="ir.sequence" id="seq_marel_bpb_no">
+            <field name="name">Nomenclature No BPB</field>
+            <field name="code">marel.bpb.no</field>
+            <field name="prefix">BPB</field>
+            <!-- <field name="suffix">/MAREL/%(year)s</field> -->
+            <field name="padding">6</field>
+        </record>
+
+
+        <record model="ir.sequence" id="seq_marel_spb_no">
+            <field name="name">Nomenclature No SPB</field>
+            <field name="code">marel.spb.no</field>
+            <field name="prefix">SPB</field>
+            <!-- <field name="suffix">/MAREL/%(year)s</field> -->
+            <field name="padding">6</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flectra>
+	<data noupdate="0">
+		<template id="report_marel_report_terima_barang_doc">
+			<t t-call="web.external_layout">
+				<t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+				<t t-if="o.state not in ['draft','confirmed','waiting','assigned','cancel']">
+					<div class="page">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>
+								Kode Dokumen
+									</th>
+									<th>
+								Halaman
+									</th>
+									<th>
+								No Revisi
+									</th>
+									<th>
+								Tgl Revisi
+									</th>
+									<th>
+								Tgl Efektif
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>MSP/F/P/GDG/01.05</td>
+									<td>1 Dari 1</td>
+									<td>-</td>
+									<td> -</td>
+									<td>1 Febuari 2019</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="oe_structure" />
+						<div class="row">
+							<h6 align="left">
+								<strong>
+								PT MAREL SUKSES PRATAMA
+								</strong>
+							</h6>
+							<h3 align="center">
+								<strong>
+								BUKTI PENERIMAAN BARANG
+								</strong>
+							</h3>
+							<!-- <div class="text-center">
+								<strong>
+									<span t-field="o.name" />
+								</strong>
+							</div> -->
+							<div class="row mt32 mb32" style="font-size:16px;">
+								<div t-if="o.no_bpb" class="col-xs-3">
+									<strong>
+									No BPB:
+									</strong>
+									<br/>
+									<!-- BPB -->
+									<span t-field="o.no_bpb" />
+									<!-- /MAREL/2020 -->
+								</div>
+								<div t-if="o.tgl_transaksi" class="col-xs-3">
+									<strong>
+									Tanggal:
+									</strong>
+									<p t-field="o.tgl_transaksi" />
+								</div>
+								<div t-if="o.nama_pengemudi" class="col-xs-3">
+									<strong>
+									Pengemudi:
+									</strong>
+									<p t-field="o.nama_pengemudi" />
+								</div>
+								<div t-if="o.no_plat_truck" class="col-xs-3">
+									<strong>
+									No Plat Truck:
+									</strong>
+									<p t-field="o.no_plat_truck" />
+								</div>
+								<div t-if="o.origin" class="col-xs-3">
+									<strong>
+									Source:
+									</strong>
+									<p t-field="o.origin" />
+								</div>
+								<div t-if="o.purchase_id2" class="col-xs-3">
+									<strong>No PO:</strong>
+									<p t-field="o.purchase_id2"/>
+								</div>
+								<div t-if="o.no_sj_supplier" class="col-xs-3">
+									<strong>
+									Surat Jalan:
+									</strong>
+									<p t-field="o.no_sj_supplier" />
+								</div>
+							</div>
+							<div class="row mt32 mb32" style="font-size:16px;">
+								<div t-if="o.partner_id" class="col-xs-3">
+									<strong>
+									Partner:
+									</strong>
+									<p t-field="o.partner_id" />
+								</div>
+							</div>
+							<table class="table table-condensed table-striped" style="font-size:16px;">
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>Produk</th>
+										<th>Diterima</th>
+										<th>Rijek</th>
+										<th>Keterangan</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr t-foreach="o.move_line_ids.sorted(key=lambda m: m.move_id.id)" t-as="move_line">
+										<td>
+											<span t-esc="move_line_index+1"/>
+										</td>
+										<td>
+											<span t-field="move_line.product_id" />
+										</td>
+										<td>
+											<span t-esc="'%.2f'% move_line.qty_done"/>
+											<!-- <span t-field="move_line.qty_done"/> -->
+											<!-- <span t-field="move_line.qty_done" /> -->
+											<span t-field="move_line.product_uom_id" />
+										</td>
+										<td>
+											<span t-field="move_line.move_id.rijek" />
+										</td>
+										<td>
+											<span t-field="move_line.move_id.keterangan_move" />
+										</td>
+									</tr>
+									<tr class="border-black">
+										<td>
+											<strong>
+										Total Qty :
+											</strong>
+											<t t-set="total" t-value="sum([l.qty_done for l in o.move_line_ids])" />
+											<span t-esc="total" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 style="font-weight:bold;font-size:17px" class="text-left">
+							Keterangan :&#160;
+								<span t-field="o.note" style="font-size:15px" />
+							</h4>
+							<table align="center" style="font-size:16px;">
+								<tr style="height:100px">
+									<td width="450px">
+									Kepala Bagian Gudang :
+									</td>
+									<td width="450px">
+									Dicek :
+									</td>
+									<td>
+									Penginput :
+									</td>
+								</tr>
+								<tr style="height:30px">
+									<td width="450px">
+									(.................................)
+									</td>
+									<td width="450px">
+									(.................................)
+									</td>
+									<td>
+									(.................................)
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</t>
+			</t>
+		</template>
+		<template id="marel_report_menu_penerimaan_po_report">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="marel_in_stock_picking.report_marel_report_terima_barang_doc" t-lang="o.partner_id.lang" />
+				</t>
+			</t>
+		</template>
+	</data>
+</flectra>

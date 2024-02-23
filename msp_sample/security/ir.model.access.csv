@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_msp_sample_dev_line_all,msp.sample.dev.line,model_msp_sample_dev_line,base.group_user,1,1,1,1
+access_msp_aksesoris_sampledev_line_all,msp.aksesoris.sampledev.line,model_msp_aksesoris_sampledev_line,base.group_user,1,1,1,1
+access_operator_mspsample_dev_line_all,operator.mspsample.dev.line,model_operator_mspsample_dev_line,base.group_user,1,1,1,1
+access_marel_sample_jenis_kk_all,msp.marel.sample.jenis.kk,model_marel_sample_jenis_kk,base.group_user,1,1,1,1
+access_msp_sample_dev_all,msp.sample.dev,model_msp_sample_dev,base.group_user,1,1,1,1
+access_marelin_permintaan_benang_developline_all,marelin.permintaan.benang.developline,model_marelin_permintaan_benang_developline,base.group_user,1,1,1,1
+access_marelin_permintaan_develop_all,marelin.permintaan.develop,model_marelin_permintaan_develop,base.group_user,1,1,1,1

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flectra>
+    <data>
+        <report 
+            string="Purchase Order Tax" 
+            id="action_report_purchase_order_tax" 
+            model="purchase.order" 
+            report_type="qweb-pdf"
+            name="report_order.report_purchaseorder_tax" 
+            file="report_order.report_purchaseorder_tax"
+            print_report_name="
+                (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
+                'Purchase Order - %s' % (object.name))"
+        />
+    </data>
+</flectra>

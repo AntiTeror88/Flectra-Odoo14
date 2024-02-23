@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_order_print" model="ir.ui.view">
+            <field name="name">sale.order.print</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="inside">
+                    <field name="printed_so"/>
+                </xpath>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-success">printed_so=='printed'</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale_order_print_form" model="ir.ui.view">
+            <field name="name">sale.order.print.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="print_sale" type="object" string="Print SO" groups="sale.group_proforma_sales" attrs="{'invisible': [('printed_so', '=', 'printed')]}"/>
+                    <field name="printed_so" widget="statusbar" statusbar_visible="printed"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_print_view" model="ir.ui.view">
+            <field name="name">purchase.print.view</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="inside">
+                    <field name="printed_po"/>
+                </xpath>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-success">printed_po=='printed'</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="purchase_print_action" model="ir.ui.view">
+            <field name="name">purchase.print.action</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="print_purchase" type="object" string="Print PO" groups="purchase.group_purchase_manager" attrs="{'invisible': [('printed_po', '=', 'printed')]}"/>
+                    <field name="printed_po" widget="statusbar" statusbar_visible="printed"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_print_view" model="ir.ui.view">
+            <field name="name">invoice.print.view</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="inside">
+                    <field name="printed_invoice"/>
+                </xpath>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-success">printed_invoice=='printed'</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="invoice_print_action" model="ir.ui.view">
+            <field name="name">invoice.print.action</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="print_invoice" type="object" string="Print Inv" groups="account.group_account_invoice" attrs="{'invisible': [('printed_invoice', '=', 'printed')]}"/>
+                    <field name="printed_invoice" widget="statusbar" statusbar_visible="printed"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

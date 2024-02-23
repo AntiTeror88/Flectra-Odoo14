@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hr_employee_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <field name="birthday" position="after">
+                <field name="age" />
+            </field>
+        </field>
+    </record>
+
+    <record id="contract_period_view_form2" model="ir.ui.view">
+        <field name="name">hr.employee.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <field name="job_id" position="after">
+                <field name="contract_period" />
+            </field>
+        </field>
+    </record>
+
+
+    <!-- <record id="first_contract_date_view_form3" model="ir.ui.view">
+        <field name="name">hr.employee.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='job_id']" position="after">
+                <field name="first_contract_date" readonly="0"/>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="first_contract_date_view_tree" model="ir.ui.view">
+        <field name="name">	hr.employee.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='job_id']" position="after">
+                <field name="contract_period"/>
+                <field name="first_contract_date"/>
+                <field name="age"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

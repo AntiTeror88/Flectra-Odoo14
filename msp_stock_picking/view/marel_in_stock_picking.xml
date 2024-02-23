@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="marel_in_stock_picking" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="before">
+                    <!-- <field name="tgl_keluar"/> -->
+                    <field name="no_mo_id"/>
+                    <field name="no_SO"/>
+                    <field name="status"/>
+                </xpath>
+                <xpath expr="//page[@name='extra']" position="inside">
+                    <group>
+                        <field name="tgl_transaksi"/>
+                        <field name="nama_pengemudi"/>
+                        <field name="no_plat_truck"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='location_dest_id']" position="before">
+                    <label for="no_sj"/>
+                    <div class="o_row">
+                        <field name="no_sj"/>
+                        <button name="button_sj_no" type="object" class="btn-primary fa fa-plus-square-o" aria-label="No SJ" string="No SJ"/>
+                    </div>
+
+                    <label for="no_bpb"/>
+                    <div class="o_row">
+                        <field name="no_bpb"/>
+                        <button name="button_bpb_no" type="object" class="btn-primary fa fa-plus-square-o" aria-label="No BPB" string="No BPB"/>
+                    </div>
+
+
+                    <label for="no_spb"/>
+                    <div class="o_row">
+                        <field name="no_spb"/>
+                        <button name="button_spb_no" type="object" class="btn-primary fa fa-plus-square-o" aria-label="No SPB" string="No SPB"/>
+                    </div>
+                    <field name="no_sj_supplier"/>
+                    <field name="partner_id"/>
+                    <field name="sj_report"/>
+                    <field name="bpb_report"/>
+                    <field name="spb_report"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_picking_tree_view_custom" model="ir.ui.view">
+            <field name="name">stock.picking.tree1</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <xpath expr="/tree/field[@name='name']" position="after">
+                    <field name="no_bpb"/>
+                    <field name="no_spb"/>
+                    <field name="no_sj"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- <record id="marel_in_stock_picking_purchase" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="No Packing">
+                        <field name="picking_ids2"/>
+                    </page>
+                </notebook>
+            </field>
+        </record> -->
+    </data>
+</odoo>
