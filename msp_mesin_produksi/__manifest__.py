@@ -33,6 +33,8 @@ Human readable name Module Project.
         'views/nama_teknisi.xml',
         'views/kerusakan_mesin_list.xml',
         'views/menu.xml',
+        "views/merk_type_mesin.xml",
+        "views/type_mesin_produksi.xml",
     ],
     'demo': [
     ],
