@@ -1,7 +1,7 @@
 {
-	"name": "msp_tanda_terima_tagihan",
+	"name": "Tanda Terima Tagihan",
 	"version": "1.0", 
-	"depends": ["product","mrp"],
+	"depends": ["product","mrp", "msp_document_id"],
 	"author": "asrent345@gmail.com", 
 	"category": "Education", 
 	'website': 'http://www.vitraining.com',
