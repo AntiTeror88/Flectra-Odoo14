@@ -12,7 +12,7 @@ class MspTandaterimaTagihanLine(models.Model):
 
     msp_tanda_terima_tagihan_id = fields.Many2one('msp.tanda.terima.tagihan',string=u'Keterangan',)
     keterangan = fields.Char(string='Keterangan',)
-    no_dokumen = fields.Char(string='No Dokumen',)
+    no_dokumen = fields.Many2one('msp.documents.id', string='No Dokumen',)
     nominal = fields.Float(string='Nominal',digits=dp.get_precision('Custom 3'),)
 
 class MspTandaTerimaTagihan(models.Model):
